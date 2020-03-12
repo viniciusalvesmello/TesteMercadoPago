@@ -28,5 +28,15 @@
             android:layout_height='wrap_content'
             android:id='@+id/mp_results'
             android:paddingTop='50dp'/>
+
+        <EditText
+            android:id="@+id/publicKey"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:id="@+id/preferenceId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </FrameLayout>

@@ -17,18 +17,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        publicKey.setText("TEST-a4c8441d-d804-4b8f-bd88-540b917a39e1")
+        preferenceId.setText("532361219-42881c36-35ca-4481-9a39-8016f84caac5")
+
         btStartMercadoPagoCheckout.setOnClickListener {
-            startMercadoPagoCheckout()
+            startMercadoPagoCheckout(
+                publicKey.text.toString(),
+                preferenceId.text.toString()
+            )
         }
     }
 
-    fun startMercadoPagoCheckout() {
-        MercadoPagoCheckout.Builder(
-            "TEST-b8777443-0aca-47bd-8d7d-57843dd536ce",
-            "532361219-af878194-acb7-4205-98a6-8855abc0cb1a"
-        ).build().startPayment(this,
-            REQUEST_CODE
-        )
+    fun startMercadoPagoCheckout(publicKey: String, preferenceId: String) {
+        MercadoPagoCheckout.Builder(publicKey, preferenceId).build()
+            .startPayment(this, REQUEST_CODE)
     }
 
     override fun onActivityResult(
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 resultCode == MercadoPagoCheckout.PAYMENT_RESULT_CODE -> {
                     val payment =
                         data?.getSerializableExtra(MercadoPagoCheckout.EXTRA_PAYMENT_RESULT) as? Payment
-                    "Resultado: ${payment?.paymentStatus}"
+                    "Resultado: ${payment?.paymentStatus} - $payment"
                 }
                 resultCode == Activity.RESULT_CANCELED && (data?.extras?.containsKey(
                     MercadoPagoCheckout.EXTRA_ERROR
